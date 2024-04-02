@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./header.css";
 import { Link, useLocation } from "react-router-dom";
 import "./header.css";
 
