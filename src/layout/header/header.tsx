@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Header.css";
+import "./header.css";
 import { Link, useLocation } from "react-router-dom";
 export function Header() {
     const location=useLocation()
