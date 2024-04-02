@@ -1,3 +1,9 @@
+import "./footer.css";
+
 export function Footer() {
-  return <div>footer</div>;
+  return (
+    <div className="footer">
+      <p>Footer</p>
+    </div>
+  );
 }
