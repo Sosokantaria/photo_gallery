@@ -1,3 +1,54 @@
-export function Home(){
-    return <div>home page</div>
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import "./home.css";
+
+const API_URL = "https://api.unsplash.com/photos";
+
+export function Home() {
+  const [imagePerPage, setImagePerPage] = useState(20);
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Fetch data using useQuery
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["images"],
+    queryFn: () =>
+      fetch(
+        `${API_URL}?per_page=${imagePerPage}&page=${page}&order_by=popular&client_id=${
+          import.meta.env.VITE_API_KEY
+        }`
+      ).then((res) => res.json()),
+    refetchOnWindowFocus: false,
+  });
+  console.log(data);
+  
+
+  const hendleSetValue = (value: string) => {
+    setSearchTerm(value);
+  };
+  return (
+    <div className="homepageContainer">
+      <div className="inputDiv">
+        <input
+          className="input"
+          placeholder="ძებნა..."
+          value={searchTerm}
+          onChange={(e) => {
+            hendleSetValue(e.target.value);
+          }}
+        />
+      </div>
+      {searchTerm !== "" ? (
+        <>searching</>
+      ) : (
+        <>
+          <div className="photo_cards">
+          Photos that will appear immediately after entering the application
+          </div>
+        </>
+      )}
+      {error && <div className="messageContainer">There is an error!</div>}
+      {isLoading && <div className="messageContainer">Loading...</div>}
+    </div>
+  );
 }

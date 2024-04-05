@@ -1,0 +1,20 @@
+.homepageConteiner {
+    height: 100%;
+    width: 100vw;
+  }
+  .inputDiv {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    margin-top: 5vh;
+  }
+  .input {
+    width: 60vw;
+    padding: 8px;
+  }
+  .inputDiv ::placeholder {
+    text-align: center;
+  }
