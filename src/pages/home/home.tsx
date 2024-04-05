@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import "./home.css";
+import { TImage } from "../../types/TImage";
+import { ImageCard } from "../../components/imageCard";
 
 const API_URL = "https://api.unsplash.com/photos";
 
@@ -10,7 +12,7 @@ export function Home() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch data using useQuery
-  const { data, error, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["images"],
     queryFn: () =>
       fetch(
@@ -20,12 +22,11 @@ export function Home() {
       ).then((res) => res.json()),
     refetchOnWindowFocus: false,
   });
-  console.log(data);
-  
 
   const hendleSetValue = (value: string) => {
     setSearchTerm(value);
   };
+  
   return (
     <div className="homepageContainer">
       <div className="inputDiv">
@@ -43,12 +44,16 @@ export function Home() {
       ) : (
         <>
           <div className="photo_cards">
-          Photos that will appear immediately after entering the application
+            {Array.isArray(data) &&
+              data.map((image: TImage, index) => (
+                <ImageCard key={index} image={image} onClick={() => {}} />
+              ))}
           </div>
         </>
       )}
-      {error && <div className="messageContainer">There is an error!</div>}
-      {isLoading && <div className="messageContainer">Loading...</div>}
+      <div className="messageConteiner">
+        {isLoading && <div>Loading...</div>}
+      </div>
     </div>
   );
 }
