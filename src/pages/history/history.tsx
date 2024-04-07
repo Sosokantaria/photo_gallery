@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import "./history.css";
 import { InputValueContext } from "../../contexts/inputValueContext";
+import { Search } from "../../components/search";
 
 export function History() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,7 +51,7 @@ export function History() {
           ))
           .reverse()}
       </div>
-      searching
+      <Search searchTerm={searchTerm}  />;
     </>
   );
 }
