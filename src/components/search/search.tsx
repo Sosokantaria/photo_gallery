@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ImageCard } from "../imageCard";
 import { TImage } from "../../types/TImage";
+import "./search.css";
 
 const API_URL_SEARCH = "https://api.unsplash.com/search/photos";
 
 export function Search({ searchTerm }: any) {
+  const queryClient = useQueryClient();
   const [imagePerPage, setImagePerPage] = useState(30);
   const [page, setPage] = useState(1);
 
@@ -24,7 +26,27 @@ export function Search({ searchTerm }: any) {
         .then((data) => data.results),
     refetchOnWindowFocus: false,
   });
-
+  // Define the mutation for loading more images
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      fetch(
+        `${API_URL_SEARCH}?client_id=${
+          import.meta.env.VITE_API_KEY
+        }&query=${encodeURIComponent(
+          searchTerm
+        )}&page=${page}&per_page=${imagePerPage}`
+      )
+        .then((res) => res.json())
+        .then((data) => data.results),
+    onSuccess: (newImages) => {
+      queryClient.setQueryData(
+        ["searchImages", searchTerm],
+        (oldImages: any) => [...oldImages, ...newImages]
+      );
+      setPage(page + 1);
+      setImagePerPage(imagePerPage + 30);
+    },
+  });
   return (
     <>
       <div className="photo_cards">
@@ -33,6 +55,18 @@ export function Search({ searchTerm }: any) {
             <ImageCard key={index} image={image} onClick={() => {}} />
           ))}
       </div>
+      {data && (
+        <div className="showBtnDiv">
+          <button
+            className="showBtn"
+            onClick={() => {
+              mutate();
+            }}
+          >
+            show more...
+          </button>
+        </div>
+      )}
 
       {isLoading && <div className="messageContainer">Loading...</div>}
     </>

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "./home.css";
 import { TImage } from "../../types/TImage";
 import { ImageCard } from "../../components/imageCard";
@@ -9,6 +9,7 @@ import { Search } from "../../components/search";
 const API_URL = "https://api.unsplash.com/photos";
 
 export function Home() {
+  const queryClient = useQueryClient();
   const [imagePerPage, setImagePerPage] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +24,22 @@ export function Home() {
         }`
       ).then((res) => res.json()),
     refetchOnWindowFocus: false,
+  });
+   // Define the mutation for loading more images
+   const { mutate } = useMutation({
+    mutationFn: () =>
+      fetch(
+        `${API_URL}?&per_page=${imagePerPage}&page=${page}&order_by=popular
+        &client_id=${import.meta.env.VITE_API_KEY}`
+      ).then((res) => res.json()),
+    onSuccess: (newImages) => {
+      queryClient.setQueryData(["images"], (oldImages: any) => [
+        ...oldImages,
+        ...newImages ,
+      ]);
+      setPage(page + 1);
+      setImagePerPage(imagePerPage + 30);
+    },
   });
 
   const hendleSetValue = (value: string) => {
@@ -58,6 +75,18 @@ export function Home() {
                 <ImageCard key={index} image={image} onClick={() => {}} />
               ))}
           </div>
+          {data && (
+            <div className="showBtnDiv">
+              <button
+                className="showBtn"
+                onClick={() => {
+                  mutate();
+                }}
+              >
+                show more...
+              </button>
+            </div>
+          )}
         </>
       )}
       <div className="messageConteiner">
