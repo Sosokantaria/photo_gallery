@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import "./home.css";
 import { TImage } from "../../types/TImage";
 import { ImageCard } from "../../components/imageCard";
+import { InputValueContext } from "../../contexts/inputValueContext";
 
 const API_URL = "https://api.unsplash.com/photos";
 
@@ -10,7 +11,7 @@ export function Home() {
   const [imagePerPage, setImagePerPage] = useState(20);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const { values, setValues } = useContext(InputValueContext);
   // Fetch data using useQuery
   const { data, isLoading } = useQuery({
     queryKey: ["images"],
@@ -24,6 +25,9 @@ export function Home() {
   });
 
   const hendleSetValue = (value: string) => {
+    if (value.length !== 0) {
+      setValues([...values, value]);
+    }
     setSearchTerm(value);
   };
   
