@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
+# Photo Gallery Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a photo gallery application built with React.js and TypeScript that allows users to view popular images, search for images based on keywords, view search history, and view detailed information about images.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Main Page**: Displays the 20 most popular images and a search box to search for images by keyword.
+2. **History Page**: Displays search history and allows users to view images corresponding to each search term.
+3. **Infinite Scroll**: Implemented on both the main page and history page for seamless browsing.
+4. **Image Details**: View full version of images, along with download counts, views, and likes.
+5. **Caching Mechanism**: Utilizes caching to store search results and avoid redundant API calls.
+6. **API**: Utilizes the Unsplash API for fetching images.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React.js / vite.js
+- TypeScript
+- Custom Infinite Scroll Implementation
+- Unsplash API
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. **Clone the repository:**
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   ```bash
+   git clone https://github.com/Sosokantaria/photo_gallery.git
+
+2. **Install dependencies:**    
+  
+  cd photo_gallery
+  npm install
+
+3. **Start the development server:**  
+
+  npm start
+  yarn dev
+
+4. **open app in your brouser**
+
+  Open http://localhost:5173 in your browser.
+ 

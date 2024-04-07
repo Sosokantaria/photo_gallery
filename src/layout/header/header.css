@@ -1,0 +1,36 @@
+.headerContent{
+    background-color: rgb(29, 113, 85);
+    height: 18vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    gap: 1.5vw;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .5);
+}
+.visible {
+    top: 0;
+    transition: top 0.4s ease-out;
+  }
+  
+  .hidden {
+    top: -18vh;
+    transition: top 0.4s ease-out;
+  }
+.links{
+    text-decoration: none;
+    color:#000000;
+}
+.listContent{
+    display: flex;
+    list-style-type: none;
+    gap: 4vw;
+    
+}
+.active{
+    color:#fff
+}
