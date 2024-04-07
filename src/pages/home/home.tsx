@@ -4,6 +4,7 @@ import "./home.css";
 import { TImage } from "../../types/TImage";
 import { ImageCard } from "../../components/imageCard";
 import { InputValueContext } from "../../contexts/inputValueContext";
+import { Search } from "../../components/search";
 
 const API_URL = "https://api.unsplash.com/photos";
 
@@ -44,7 +45,11 @@ export function Home() {
         />
       </div>
       {searchTerm !== "" ? (
-        <>searching</>
+         <>
+         <Search
+           searchTerm={searchTerm}
+         />
+       </>
       ) : (
         <>
           <div className="photo_cards">
