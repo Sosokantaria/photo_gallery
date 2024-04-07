@@ -11,7 +11,18 @@
     justify-content: center;
     color: black;
   }
-  
+  .showBtnDiv {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .showBtn{
+    background-color: inherit;
+    color: #494949;
+    border:0
+  }
   @media (min-width: 300px) {
     .photo_cards {
       grid-template-columns: repeat(1, 1fr);

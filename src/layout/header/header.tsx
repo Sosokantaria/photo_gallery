@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import "./header.css";
 import { Link, useLocation } from "react-router-dom";
+import "./header.css";
+
+
 export function Header() {
     const location=useLocation()
     const [scrollPosition, setScrollPosition] = useState(window.scrollY);
