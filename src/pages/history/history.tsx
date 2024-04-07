@@ -1,3 +1,11 @@
+
+import "./history.css"
+
 export function History(){
-    return <div>history page</div>
+    return  <>
+    <div className="historyContentDiv">
+      uniq values of inputs
+    </div>
+    searching
+  </>
 }

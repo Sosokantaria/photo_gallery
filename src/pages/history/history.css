@@ -1,0 +1,8 @@
+.historyContentDiv{
+    width: 60%;
+    height: 100px;
+    overflow-y: scroll;
+    margin: 0 auto;
+    border:2px solid black;
+    background-color: rgb(148, 206, 206);
+}
