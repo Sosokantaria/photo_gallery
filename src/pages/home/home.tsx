@@ -5,6 +5,7 @@ import { TImage } from "../../types/TImage";
 import { ImageCard } from "../../components/imageCard";
 import { InputValueContext } from "../../contexts/inputValueContext";
 import { Search } from "../../components/search";
+import { ModalContext } from "../../contexts/modalContext";
 
 const API_URL = "https://api.unsplash.com/photos";
 
@@ -14,6 +15,9 @@ export function Home() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const { values, setValues } = useContext(InputValueContext);
+  const { setId, setModal } = useContext(ModalContext);
+
+
   // Fetch data using useQuery
   const { data, isLoading } = useQuery({
     queryKey: ["images"],
@@ -25,8 +29,10 @@ export function Home() {
       ).then((res) => res.json()),
     refetchOnWindowFocus: false,
   });
-   // Define the mutation for loading more images
-   const { mutate } = useMutation({
+
+
+  // Define the mutation for loading more images
+  const { mutate } = useMutation({
     mutationFn: () =>
       fetch(
         `${API_URL}?&per_page=${imagePerPage}&page=${page}&order_by=popular
@@ -35,7 +41,7 @@ export function Home() {
     onSuccess: (newImages) => {
       queryClient.setQueryData(["images"], (oldImages: any) => [
         ...oldImages,
-        ...newImages ,
+        ...newImages,
       ]);
       setPage(page + 1);
       setImagePerPage(imagePerPage + 30);
@@ -48,6 +54,14 @@ export function Home() {
     }
     setSearchTerm(value);
   };
+
+
+  // Set image properties to imageContentContext
+  const handleImageClick = (image: TImage) => {
+    setId(image.id);
+    setModal(true);
+  };
+
   
   return (
     <div className="homepageContainer">
@@ -62,17 +76,21 @@ export function Home() {
         />
       </div>
       {searchTerm !== "" ? (
-         <>
-         <Search
-           searchTerm={searchTerm}
-         />
-       </>
+        <>
+          <Search searchTerm={searchTerm} />
+        </>
       ) : (
         <>
           <div className="photo_cards">
             {Array.isArray(data) &&
               data.map((image: TImage, index) => (
-                <ImageCard key={index} image={image} onClick={() => {}} />
+                <ImageCard
+                  key={index}
+                  image={image}
+                  onClick={() => {
+                    handleImageClick(image);
+                  }}
+                />
               ))}
           </div>
           {data && (
